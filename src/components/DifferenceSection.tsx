@@ -8,16 +8,16 @@ const differenceCards = [
   {
     title: "Personalized Pace",
     description:
-      "No rigid curriculum. Every session is tailored to your skill level, goals, and learning speed. You set the pace — we ensure the depth.",
+      "Every session is tailored to your skill level, goals, and learning speed. You set the pace — we ensure the depth.",
     accent: "01",
     span: "md:col-span-2 md:row-span-2",
-    image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1605289355680-75fb41239154?w=600&q=80",
     hasImage: true,
   },
   {
     title: "Pro Techniques",
     description:
-      "Master insider techniques that go far beyond free YouTube tutorials. Learn the methods used in professional ateliers across Paris, Milan, and Lagos.",
+      "Master insider methods used in professional ateliers across Paris, Milan, and Lagos — far beyond free tutorials.",
     accent: "02",
     span: "md:col-span-1 md:row-span-1",
     hasImage: false,
@@ -25,7 +25,7 @@ const differenceCards = [
   {
     title: "Build a Portfolio",
     description:
-      "Every module produces real, tangible outputs. You leave with custom-fit blocks, production-ready patterns, and a body of work that proves your skill.",
+      "Every module produces tangible outputs. You leave with custom-fit blocks, production-ready patterns, and proof of skill.",
     accent: "03",
     span: "md:col-span-1 md:row-span-1",
     hasImage: false,
@@ -33,7 +33,7 @@ const differenceCards = [
   {
     title: "Private Coaching",
     description:
-      "Not a group workshop. It's just you and the craft. Intensive, focused, and transformative — the way mastery has always been taught.",
+      "Not a group workshop. It's just you and the craft. Intensive, focused, and transformative.",
     accent: "04",
     span: "md:col-span-1 md:row-span-1",
     hasImage: false,
@@ -41,8 +41,16 @@ const differenceCards = [
   {
     title: "Lifetime Foundation",
     description:
-      "The patterns you learn to draft become the foundation for an entire career. Whether bridal, RTW, or couture — it all starts here.",
+      "The patterns you learn to draft become the foundation for an entire career — bridal, RTW, or couture.",
     accent: "05",
+    span: "md:col-span-1 md:row-span-1",
+    hasImage: false,
+  },
+  {
+    title: "Flexible Learning",
+    description:
+      "Online or in-person at our Lagos atelier. Learn from anywhere in the world without compromising quality.",
+    accent: "06",
     span: "md:col-span-1 md:row-span-1",
     hasImage: false,
   },
@@ -91,7 +99,7 @@ export default function DifferenceSection() {
                 ease: [0.76, 0, 0.24, 1],
               }}
               className={`group relative overflow-hidden ${card.span} ${
-                card.hasImage ? "min-h-[400px] md:min-h-[500px]" : "p-8 md:p-10"
+                card.hasImage ? "min-h-[400px] md:min-h-[500px]" : "p-8 md:p-10 min-h-[220px]"
               } glass-light hover:border-champagne/20 transition-all duration-700 cursor-hover`}
             >
               {card.hasImage && (

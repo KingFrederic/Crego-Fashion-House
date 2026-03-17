@@ -44,7 +44,7 @@ export default function AboutSection() {
         {/* Asymmetrical grid layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left — Stacked Images */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative pb-12 md:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -52,8 +52,8 @@ export default function AboutSection() {
               className="relative aspect-[3/4] overflow-hidden"
             >
               <Image
-                src="https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=700&q=80"
-                alt="Designer working on pattern drafting"
+                src="https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?w=700&q=80"
+                alt="Sewing machine crafting bridal fabric"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 40vw"
@@ -69,8 +69,8 @@ export default function AboutSection() {
               className="absolute -bottom-8 -right-4 lg:right-[-2rem] w-[55%] aspect-[4/5] overflow-hidden border-4 border-onyx z-10 hidden md:block"
             >
               <Image
-                src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=500&q=80"
-                alt="Close-up of fabric and pattern tools"
+                src="https://images.unsplash.com/photo-1520975916090-3105956dac38?w=500&q=80"
+                alt="Measuring tape and fabric swatches for pattern making"
                 fill
                 className="object-cover"
                 sizes="25vw"

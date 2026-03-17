@@ -139,8 +139,8 @@ export default function HeroSection() {
           >
             <motion.div style={{ scale: imageScale }} className="w-full h-full">
               <Image
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80"
-                alt="Fashion atelier - elegant dress form with draped fabric"
+                src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=80"
+                alt="Elegant bridal gown with intricate pattern details"
                 fill
                 className="object-cover"
                 priority
