@@ -18,9 +18,9 @@ export default function QuoteSection() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={isInView ? { opacity: 0.08, scale: 1 } : {}}
           transition={{ duration: 1 }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4"
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4 overflow-hidden"
         >
-          <span className="font-[var(--font-serif)] text-[15rem] text-champagne leading-none select-none">
+          <span className="font-[var(--font-serif)] text-[8rem] md:text-[12rem] lg:text-[15rem] text-champagne leading-none select-none">
             &ldquo;
           </span>
         </motion.div>

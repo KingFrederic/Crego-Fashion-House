@@ -6,28 +6,28 @@ import Image from "next/image";
 
 const images = [
   {
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&q=80",
-    alt: "Fashion design studio",
+    src: "https://images.unsplash.com/photo-1605289355680-75fb41239154?w=500&q=80",
+    alt: "Bridal gown on dress form",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80",
-    alt: "Fabric draping",
+    src: "https://images.unsplash.com/photo-1520975916090-3105956dac38?w=500&q=80",
+    alt: "Fabric swatches and measuring tape",
     aspect: "aspect-[4/5]",
   },
   {
-    src: "https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=500&q=80",
-    alt: "Pattern cutting tools",
+    src: "https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?w=500&q=80",
+    alt: "Sewing machine close-up with white fabric",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "https://images.unsplash.com/photo-1559563458-527698bf5295?w=500&q=80",
-    alt: "Dress form with garment",
+    src: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&q=80",
+    alt: "Elegant white bridal fabric detail",
     aspect: "aspect-[4/5]",
   },
   {
-    src: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500&q=80",
-    alt: "Fashion sketches",
+    src: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=500&q=80",
+    alt: "Pattern drafting workspace with tools",
     aspect: "aspect-[3/4]",
   },
 ];
@@ -48,7 +48,7 @@ export default function GalleryStrip() {
         >
           <div className="w-12 h-px bg-champagne/30" />
           <span className="text-champagne/50 text-[10px] tracking-[0.35em] uppercase">
-            The Atelier
+            Our Craft
           </span>
           <div className="w-12 h-px bg-champagne/30" />
         </motion.div>
