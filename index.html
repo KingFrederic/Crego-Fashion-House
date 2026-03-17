@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crego Fashion House — Master Pattern Drafting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0806;
+  --cream:#faf6f0;
+  --champagne:#c9a96e;
+  --champagne-light:#e8d5a8;
+  --rose:#c4828a;
+  --rose-muted:#a0626a;
+  --warm-gray:#8a8078;
+  --off-white:#f2ece4;
+  --deep-brown:#1a1410;
+  --silk:#f5efe7;
+  --gold-gradient:linear-gradient(135deg,#c9a96e 0%,#e8d5a8 40%,#c9a96e 60%,#a8854a 100%);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;font-size:16px}
+body{
+  font-family:'Jost',sans-serif;
+  background:var(--ink);
+  color:var(--cream);
+  overflow-x:hidden;
+  cursor:default;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─── PRELOADER ─── */
+.preloader{
+position:fixed;inset:0;z-index:9999;
+background:var(–ink);
+display:flex;align-items:center;justify-content:center;
+transition:opacity 0.8s ease, visibility 0.8s ease;
+}
+.preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.preloader-text{
+font-family:‘Cormorant Garamond’,serif;
+font-size:clamp(1.4rem,4vw,2.8rem);
+font-weight:300;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–champagne);
+animation:preloaderPulse 1.5s ease-in-out infinite;
+}
+@keyframes preloaderPulse{
+0%,100%{opacity:0.3}50%{opacity:1}
+}
+
+/* ─── CUSTOM CURSOR ─── */
+.cursor-dot{
+width:8px;height:8px;border-radius:50%;
+background:var(–champagne);
+position:fixed;top:0;left:0;
+pointer-events:none;z-index:10000;
+transition:transform 0.1s ease;
+mix-blend-mode:difference;
+}
+.cursor-ring{
+width:40px;height:40px;border-radius:50%;
+border:1px solid var(–champagne);
+position:fixed;top:0;left:0;
+pointer-events:none;z-index:10000;
+transition:transform 0.3s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+transform:translate(-50%,-50%);
+}
+.cursor-ring.hover{
+width:60px;height:60px;
+border-color:var(–rose);
+}
+
+/* ─── NAVIGATION ─── */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:1000;
+padding:1.5rem 3rem;
+display:flex;align-items:center;justify-content:space-between;
+transition:background 0.4s ease, backdrop-filter 0.4s ease;
+}
+nav.scrolled{
+background:rgba(10,8,6,0.85);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+}
+.nav-logo{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1.3rem;
+font-weight:600;
+letter-spacing:0.25em;
+text-transform:uppercase;
+color:var(–champagne);
+text-decoration:none;
+}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{
+font-family:‘Jost’,sans-serif;
+font-size:0.75rem;
+font-weight:300;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–cream);
+text-decoration:none;
+position:relative;
+transition:color 0.3s ease;
+}
+.nav-links a::after{
+content:’’;position:absolute;bottom:-4px;left:0;width:0;height:1px;
+background:var(–champagne);transition:width 0.3s ease;
+}
+.nav-links a:hover{color:var(–champagne)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+font-family:‘Jost’,sans-serif;
+font-size:0.7rem;
+font-weight:400;
+letter-spacing:0.25em;
+text-transform:uppercase;
+color:var(–ink);
+background:var(–champagne);
+padding:0.7rem 1.8rem;
+text-decoration:none;
+transition:all 0.4s ease;
+border:1px solid var(–champagne);
+}
+.nav-cta:hover{
+background:transparent;color:var(–champagne);
+}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:24px;height:1px;background:var(–cream);transition:all 0.3s ease}
+
+/* ─── HERO ─── */
+.hero{
+min-height:100vh;
+display:flex;align-items:center;justify-content:center;
+position:relative;
+overflow:hidden;
+}
+.hero-bg{
+position:absolute;inset:0;
+background:
+radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.08) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 20%, rgba(196,130,138,0.06) 0%, transparent 50%),
+radial-gradient(ellipse at 50% 80%, rgba(201,169,110,0.04) 0%, transparent 60%);
+}
+.hero-pattern{
+position:absolute;inset:0;
+opacity:0.03;
+background-image:
+repeating-linear-gradient(0deg, transparent, transparent 99px, var(–champagne) 99px, var(–champagne) 100px),
+repeating-linear-gradient(90deg, transparent, transparent 99px, var(–champagne) 99px, var(–champagne) 100px);
+}
+.hero-content{
+text-align:center;
+position:relative;z-index:2;
+padding:2rem;
+max-width:900px;
+}
+.hero-eyebrow{
+font-family:‘Jost’,sans-serif;
+font-size:0.7rem;
+font-weight:300;
+letter-spacing:0.5em;
+text-transform:uppercase;
+color:var(–champagne);
+margin-bottom:2rem;
+opacity:0;
+animation:fadeSlideUp 1s ease 1.2s forwards;
+}
+.hero-title{
+font-family:‘Playfair Display’,serif;
+font-size:clamp(2.5rem,7vw,5.5rem);
+font-weight:400;
+line-height:1.1;
+color:var(–cream);
+margin-bottom:0.5rem;
+opacity:0;
+animation:fadeSlideUp 1s ease 1.5s forwards;
+}
+.hero-title em{
+font-style:italic;
+color:var(–champagne);
+font-weight:300;
+}
+.hero-subtitle{
+font-family:‘Cormorant Garamond’,serif;
+font-size:clamp(1.1rem,2.5vw,1.6rem);
+font-weight:300;
+font-style:italic;
+color:var(–warm-gray);
+margin-top:1rem;
+margin-bottom:3rem;
+opacity:0;
+animation:fadeSlideUp 1s ease 1.8s forwards;
+}
+.hero-divider{
+width:60px;height:1px;
+background:var(–champagne);
+margin:0 auto 2.5rem;
+opacity:0;
+animation:scaleIn 1s ease 2s forwards;
+}
+.hero-desc{
+font-family:‘Jost’,sans-serif;
+font-size:0.95rem;
+font-weight:300;
+line-height:1.8;
+color:rgba(250,246,240,0.7);
+max-width:600px;
+margin:0 auto 3rem;
+opacity:0;
+animation:fadeSlideUp 1s ease 2.1s forwards;
+}
+.hero-cta-group{
+display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+opacity:0;
+animation:fadeSlideUp 1s ease 2.4s forwards;
+}
+.btn-primary{
+font-family:‘Jost’,sans-serif;
+font-size:0.75rem;
+font-weight:400;
+letter-spacing:0.25em;
+text-transform:uppercase;
+color:var(–ink);
+background:var(–gold-gradient);
+background-size:200% 200%;
+padding:1rem 3rem;
+text-decoration:none;
+display:inline-flex;align-items:center;gap:0.8rem;
+transition:all 0.5s ease;
+position:relative;
+overflow:hidden;
+}
+.btn-primary::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
+opacity:0;transition:opacity 0.3s ease;
+}
+.btn-primary:hover::before{opacity:1}
+.btn-primary:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 40px rgba(201,169,110,0.3);
+}
+.btn-secondary{
+font-family:‘Jost’,sans-serif;
+font-size:0.75rem;
+font-weight:300;
+letter-spacing:0.25em;
+text-transform:uppercase;
+color:var(–champagne);
+border:1px solid rgba(201,169,110,0.4);
+padding:1rem 3rem;
+text-decoration:none;
+transition:all 0.4s ease;
+}
+.btn-secondary:hover{
+border-color:var(–champagne);
+background:rgba(201,169,110,0.08);
+}
+.hero-scroll{
+position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+display:flex;flex-direction:column;align-items:center;gap:0.8rem;
+opacity:0;animation:fadeIn 1s ease 3s forwards;
+}
+.hero-scroll span{
+font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;
+color:var(–warm-gray);font-weight:300;
+}
+.scroll-line{
+width:1px;height:40px;position:relative;overflow:hidden;
+}
+.scroll-line::after{
+content:’’;position:absolute;top:-100%;left:0;
+width:1px;height:100%;background:var(–champagne);
+animation:scrollDown 2s ease infinite;
+}
+@keyframes scrollDown{
+0%{top:-100%}100%{top:100%}
+}
+
+/* ─── SECTION STYLES ─── */
+section{position:relative}
+.section-padding{padding:8rem 3rem}
+.section-header{text-align:center;margin-bottom:5rem}
+.section-eyebrow{
+font-family:‘Jost’,sans-serif;
+font-size:0.65rem;
+font-weight:300;
+letter-spacing:0.5em;
+text-transform:uppercase;
+color:var(–champagne);
+margin-bottom:1.5rem;
+}
+.section-title{
+font-family:‘Playfair Display’,serif;
+font-size:clamp(2rem,4vw,3.5rem);
+font-weight:400;
+color:var(–cream);
+line-height:1.2;
+}
+.section-title em{font-style:italic;color:var(–champagne)}
+.section-line{
+width:40px;height:1px;background:var(–champagne);
+margin:1.5rem auto 0;
+}
+
+/* ─── ABOUT / INTRO ─── */
+.about{
+background:linear-gradient(180deg, var(–ink) 0%, var(–deep-brown) 100%);
+}
+.about-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:5rem;
+max-width:1200px;
+margin:0 auto;
+align-items:center;
+}
+.about-visual{
+position:relative;
+aspect-ratio:3/4;
+overflow:hidden;
+}
+.about-visual-inner{
+width:100%;height:100%;
+background:linear-gradient(135deg, rgba(201,169,110,0.15), rgba(196,130,138,0.1));
+position:relative;
+display:flex;align-items:center;justify-content:center;
+}
+.about-visual-inner::before{
+content:‘✦’;
+font-size:8rem;
+color:rgba(201,169,110,0.08);
+}
+.about-visual-frame{
+position:absolute;
+inset:15px;
+border:1px solid rgba(201,169,110,0.25);
+}
+.about-visual-label{
+position:absolute;bottom:2rem;left:2rem;
+font-family:‘Cormorant Garamond’,serif;
+font-size:0.85rem;
+font-style:italic;
+color:var(–champagne);
+letter-spacing:0.1em;
+}
+.about-text h3{
+font-family:‘Playfair Display’,serif;
+font-size:clamp(1.6rem,3vw,2.5rem);
+font-weight:400;
+line-height:1.3;
+margin-bottom:2rem;
+}
+.about-text h3 em{font-style:italic;color:var(–champagne)}
+.about-text p{
+font-family:‘Jost’,sans-serif;
+font-size:0.95rem;
+font-weight:300;
+line-height:2;
+color:rgba(250,246,240,0.65);
+margin-bottom:1.5rem;
+}
+.about-features{
+display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+margin-top:2.5rem;
+}
+.about-feature{
+padding:1.5rem;
+border:1px solid rgba(201,169,110,0.12);
+transition:all 0.4s ease;
+}
+.about-feature:hover{
+border-color:rgba(201,169,110,0.35);
+background:rgba(201,169,110,0.03);
+}
+.about-feature-title{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1rem;
+font-weight:500;
+color:var(–champagne);
+margin-bottom:0.5rem;
+letter-spacing:0.05em;
+}
+.about-feature-desc{
+font-size:0.8rem;
+font-weight:300;
+color:rgba(250,246,240,0.5);
+line-height:1.6;
+}
+
+/* ─── MODULES ─── */
+.modules{
+background:var(–deep-brown);
+position:relative;
+}
+.modules::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(–champagne),transparent);
+opacity:0.3;
+}
+.modules-grid{
+max-width:1200px;margin:0 auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:2px;
+}
+.module-card{
+padding:3rem 2.5rem;
+background:rgba(10,8,6,0.5);
+border:1px solid rgba(201,169,110,0.06);
+position:relative;
+overflow:hidden;
+transition:all 0.5s ease;
+cursor:default;
+}
+.module-card::before{
+content:’’;position:absolute;top:0;left:0;
+width:100%;height:2px;
+background:var(–gold-gradient);
+transform:scaleX(0);
+transform-origin:left;
+transition:transform 0.5s ease;
+}
+.module-card:hover::before{transform:scaleX(1)}
+.module-card:hover{
+background:rgba(201,169,110,0.04);
+border-color:rgba(201,169,110,0.15);
+}
+.module-number{
+font-family:‘Playfair Display’,serif;
+font-size:3rem;
+font-weight:300;
+color:rgba(201,169,110,0.12);
+line-height:1;
+margin-bottom:1.5rem;
+transition:color 0.4s ease;
+}
+.module-card:hover .module-number{color:rgba(201,169,110,0.25)}
+.module-label{
+font-family:‘Jost’,sans-serif;
+font-size:0.6rem;
+font-weight:400;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–champagne);
+margin-bottom:0.8rem;
+}
+.module-title{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1.3rem;
+font-weight:500;
+color:var(–cream);
+margin-bottom:1.2rem;
+line-height:1.3;
+}
+.module-topics{list-style:none}
+.module-topics li{
+font-family:‘Jost’,sans-serif;
+font-size:0.82rem;
+font-weight:300;
+color:rgba(250,246,240,0.5);
+line-height:1.7;
+padding-left:1.2rem;
+position:relative;
+}
+.module-topics li::before{
+content:’—’;
+position:absolute;left:0;
+color:var(–champagne);
+opacity:0.5;
+}
+
+/* ─── WHY SECTION ─── */
+.why{
+background:
+radial-gradient(ellipse at 30% 50%, rgba(201,169,110,0.06) 0%, transparent 50%),
+var(–ink);
+}
+.why-grid{
+max-width:1000px;margin:0 auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:3rem;
+}
+.why-card{
+text-align:center;
+padding:3rem 2rem;
+position:relative;
+}
+.why-card::before{
+content:’’;
+width:50px;height:50px;
+border:1px solid rgba(201,169,110,0.2);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+margin:0 auto 2rem;
+}
+.why-icon{
+font-size:1.5rem;
+margin-bottom:2rem;
+display:block;
+color:var(–champagne);
+}
+.why-card h4{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1.3rem;
+font-weight:500;
+color:var(–cream);
+margin-bottom:1rem;
+}
+.why-card p{
+font-family:‘Jost’,sans-serif;
+font-size:0.85rem;
+font-weight:300;
+color:rgba(250,246,240,0.55);
+line-height:1.8;
+}
+
+/* ─── TESTIMONIAL / QUOTE ─── */
+.quote-section{
+padding:6rem 3rem;
+background:linear-gradient(180deg, var(–ink) 0%, rgba(26,20,16,0.8) 50%, var(–ink) 100%);
+text-align:center;
+position:relative;
+}
+.quote-section::before,.quote-section::after{
+content:’’;position:absolute;left:50%;transform:translateX(-50%);
+width:200px;height:1px;
+background:linear-gradient(90deg,transparent,var(–champagne),transparent);
+opacity:0.2;
+}
+.quote-section::before{top:0}
+.quote-section::after{bottom:0}
+.quote-mark{
+font-family:‘Playfair Display’,serif;
+font-size:6rem;
+color:rgba(201,169,110,0.15);
+line-height:1;
+margin-bottom:-2rem;
+}
+.quote-text{
+font-family:‘Cormorant Garamond’,serif;
+font-size:clamp(1.3rem,3vw,2rem);
+font-weight:300;
+font-style:italic;
+color:var(–cream);
+max-width:700px;
+margin:0 auto;
+line-height:1.6;
+}
+.quote-author{
+font-family:‘Jost’,sans-serif;
+font-size:0.7rem;
+font-weight:400;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–champagne);
+margin-top:2rem;
+}
+
+/* ─── CTA SECTION ─── */
+.cta-section{
+padding:10rem 3rem;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+.cta-section::before{
+content:’’;position:absolute;inset:0;
+background:
+radial-gradient(ellipse at center, rgba(201,169,110,0.1) 0%, transparent 60%),
+var(–deep-brown);
+}
+.cta-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.cta-inner .section-title{margin-bottom:1.5rem}
+.cta-desc{
+font-family:‘Jost’,sans-serif;
+font-size:0.95rem;
+font-weight:300;
+color:rgba(250,246,240,0.6);
+line-height:1.8;
+margin-bottom:3rem;
+}
+.cta-whatsapp{
+display:inline-flex;
+align-items:center;
+gap:1rem;
+font-family:‘Jost’,sans-serif;
+font-size:0.8rem;
+font-weight:400;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–ink);
+background:var(–gold-gradient);
+background-size:200% 200%;
+padding:1.2rem 3.5rem;
+text-decoration:none;
+transition:all 0.5s ease;
+position:relative;
+overflow:hidden;
+}
+.cta-whatsapp::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(255,255,255,0.25),transparent);
+opacity:0;transition:opacity 0.3s ease;
+}
+.cta-whatsapp:hover::before{opacity:1}
+.cta-whatsapp:hover{
+transform:translateY(-3px);
+box-shadow:0 15px 50px rgba(201,169,110,0.35);
+}
+.cta-whatsapp svg{width:20px;height:20px;fill:var(–ink)}
+.cta-social{
+margin-top:2.5rem;
+display:flex;justify-content:center;gap:2rem;
+}
+.cta-social a{
+font-family:‘Jost’,sans-serif;
+font-size:0.7rem;
+font-weight:300;
+letter-spacing:0.2em;
+text-transform:uppercase;
+color:var(–warm-gray);
+text-decoration:none;
+transition:color 0.3s ease;
+}
+.cta-social a:hover{color:var(–champagne)}
+
+/* ─── FOOTER ─── */
+footer{
+padding:3rem;
+text-align:center;
+border-top:1px solid rgba(201,169,110,0.08);
+}
+.footer-logo{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1.1rem;
+font-weight:600;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:var(–champagne);
+margin-bottom:1rem;
+}
+.footer-text{
+font-family:‘Jost’,sans-serif;
+font-size:0.7rem;
+font-weight:300;
+color:var(–warm-gray);
+letter-spacing:0.15em;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeSlideUp{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+@keyframes scaleIn{
+from{opacity:0;transform:scaleX(0)}
+to{opacity:1;transform:scaleX(1)}
+}
+@keyframes fadeIn{
+from{opacity:0}to{opacity:1}
+}
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible{
+opacity:1;
+transform:translateY(0);
+}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-5{transition-delay:0.5s}
+.reveal-delay-6{transition-delay:0.6s}
+
+/* ─── FLOATING ELEMENTS ─── */
+.float-element{
+position:absolute;
+opacity:0.04;
+font-family:‘Playfair Display’,serif;
+font-size:15rem;
+font-weight:300;
+color:var(–champagne);
+pointer-events:none;
+user-select:none;
+}
+
+/* ─── INSTAGRAM BADGE ─── */
+.ig-float{
+position:fixed;bottom:2rem;right:2rem;z-index:999;
+width:50px;height:50px;
+border-radius:50%;
+background:rgba(201,169,110,0.15);
+border:1px solid rgba(201,169,110,0.3);
+display:flex;align-items:center;justify-content:center;
+text-decoration:none;
+transition:all 0.4s ease;
+backdrop-filter:blur(10px);
+}
+.ig-float:hover{
+background:rgba(201,169,110,0.25);
+transform:scale(1.1);
+}
+.ig-float svg{width:22px;height:22px;fill:var(–champagne)}
+
+/* ─── MOBILE MENU ─── */
+.mobile-menu{
+position:fixed;inset:0;z-index:999;
+background:rgba(10,8,6,0.97);
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+opacity:0;visibility:hidden;
+transition:all 0.5s ease;
+backdrop-filter:blur(20px);
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{
+font-family:‘Cormorant Garamond’,serif;
+font-size:1.8rem;
+font-weight:400;
+color:var(–cream);
+text-decoration:none;
+transition:color 0.3s ease;
+letter-spacing:0.1em;
+}
+.mobile-menu a:hover{color:var(–champagne)}
+.mobile-close{
+position:absolute;top:2rem;right:2rem;
+font-size:2rem;color:var(–cream);
+cursor:pointer;background:none;border:none;
+font-family:‘Jost’,sans-serif;font-weight:200;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+.modules-grid{grid-template-columns:repeat(2,1fr)}
+.about-grid{grid-template-columns:1fr;gap:3rem}
+.about-visual{max-width:500px;margin:0 auto}
+nav{padding:1.2rem 2rem}
+}
+@media(max-width:768px){
+.section-padding{padding:5rem 1.5rem}
+.nav-links{display:none}
+.hamburger{display:flex}
+.modules-grid{grid-template-columns:1fr}
+.why-grid{grid-template-columns:1fr;gap:2rem}
+.about-features{grid-template-columns:1fr}
+.hero-cta-group{flex-direction:column;align-items:center}
+.btn-primary,.btn-secondary{width:100%;max-width:300px;text-align:center;justify-content:center}
+.cursor-dot,.cursor-ring{display:none}
+.float-element{font-size:8rem}
+}
+@media(max-width:480px){
+.hero-title{font-size:2.2rem}
+.module-card{padding:2rem 1.5rem}
+.cta-whatsapp{padding:1rem 2rem;font-size:0.7rem}
+}
+
+/* ─── GRAIN OVERLAY ─── */
+.grain{
+position:fixed;inset:0;z-index:9998;
+pointer-events:none;
+opacity:0.035;
+background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’/%3E%3C/svg%3E”);
+background-repeat:repeat;
+background-size:256px 256px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- Grain Overlay -->
+
+<div class="grain"></div>
+
+<!-- Preloader -->
+
+<div class="preloader" id="preloader">
+  <div class="preloader-text">Crego Fashion House</div>
+</div>
+
+<!-- Custom Cursor -->
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Crego</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#curriculum">Curriculum</a>
+    <a href="#why">Why Us</a>
+    <a class="nav-cta" href="https://wa.me/2349090059964?text=Hello%20Crego%20Fashion%20House!%20I'm%20interested%20in%20your%20Pattern%20Drafting%20Training%20program.%20Please%20share%20more%20details." target="_blank">Enroll Now</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">&times;</button>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#curriculum" onclick="toggleMenu()">Curriculum</a>
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="https://wa.me/2349090059964?text=Hello%20Crego%20Fashion%20House!%20I'm%20interested%20in%20your%20Pattern%20Drafting%20Training%20program.%20Please%20share%20more%20details." target="_blank" onclick="toggleMenu()">Enroll Now</a>
+</div>
+
+<!-- Instagram Float -->
+
+<a href="https://www.instagram.com/cregofashion?igsh=MTdhNTI2cWt1dndwbA==" target="_blank" class="ig-float" title="Follow us on Instagram">
+  <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+</a>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="float-element" style="top:10%;right:-5%;">C</div>
+  <div class="float-element" style="bottom:5%;left:-3%;font-size:12rem">✦</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Crego Fashion House — Private Coaching</p>
+    <h1 class="hero-title">Master the Art of<br><em>Pattern Drafting</em></h1>
+    <p class="hero-subtitle">For Ready-to-Wear, Custom Made &amp; Bridals</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Intimate 1-on-1 private coaching — online or in-person. Learn to create clothes that fit perfectly, from basic foundations to advanced couture designs.
+    </p>
+    <div class="hero-cta-group">
+      <a href="https://wa.me/2349090059964?text=Hello%20Crego%20Fashion%20House!%20I'm%20interested%20in%20enrolling%20for%20the%20Pattern%20Drafting%20Training.%20Please%20send%20me%20more%20details%20on%20pricing%20and%20schedule.%20Thank%20you!" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Begin Your Journey
+      </a>
+      <a href="#curriculum" class="btn-secondary">View Curriculum</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+
+<section class="about section-padding" id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-visual-inner"></div>
+      <div class="about-visual-frame"></div>
+      <span class="about-visual-label">Est. Crego Fashion House</span>
+    </div>
+    <div class="about-text">
+      <div class="section-eyebrow reveal">Private Coaching</div>
+      <h3 class="reveal reveal-delay-1">Learn to draft patterns<br>that fit <em>any body</em>,<br>every time.</h3>
+      <p class="reveal reveal-delay-2">
+        This isn't a group workshop. It's an intensive, one-on-one private coaching program tailored to your pace and your goals — whether you join online or in person.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Tell me that specific thing you want to learn. From foundational blocks to couture bustiers, from viral trend drafting to deconstructing your favorite store-bought garments — we go as deep as you need.
+      </p>
+      <div class="about-features">
+        <div class="about-feature reveal reveal-delay-3">
+          <div class="about-feature-title">Online</div>
+          <div class="about-feature-desc">Learn from anywhere. Live, interactive sessions at your convenience.</div>
+        </div>
+        <div class="about-feature reveal reveal-delay-4">
+          <div class="about-feature-title">Physical</div>
+          <div class="about-feature-desc">In-studio hands-on training with direct guidance and feedback.</div>
+        </div>
+        <div class="about-feature reveal reveal-delay-5">
+          <div class="about-feature-title">Personalized</div>
+          <div class="about-feature-desc">We focus on the areas you find most difficult — no rigid syllabus.</div>
+        </div>
+        <div class="about-feature reveal reveal-delay-6">
+          <div class="about-feature-title">Portfolio</div>
+          <div class="about-feature-desc">Leave with custom-fit blocks you can use in your career forever.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ QUOTE ═══════════════ -->
+
+<section class="quote-section">
+  <div class="quote-mark reveal">"</div>
+  <p class="quote-text reveal reveal-delay-1">
+    With me, it's intensive and you have to be serious. We don't skim surfaces — we master the craft. Pro techniques that YouTube tutorials often skip.
+  </p>
+  <p class="quote-author reveal reveal-delay-2">— Crego Fashion House</p>
+</section>
+
+<!-- ═══════════════ CURRICULUM ═══════════════ -->
+
+<section class="modules section-padding" id="curriculum">
+  <div class="section-header">
+    <p class="section-eyebrow reveal">The Curriculum</p>
+    <h2 class="section-title reveal reveal-delay-1">Nine Modules.<br><em>Complete Mastery.</em></h2>
+    <div class="section-line reveal reveal-delay-2"></div>
+  </div>
+  <div class="modules-grid">
+
+```
+<div class="module-card reveal">
+  <div class="module-number">01</div>
+  <div class="module-label">Module 1</div>
+  <div class="module-title">The Foundation — Block Essentials</div>
+  <ul class="module-topics">
+    <li>Precision body measurement for any body type</li>
+    <li>The Master Bodice Block (front &amp; back)</li>
+    <li>Skirt &amp; Trouser Block drafting</li>
+    <li>Sleeve mastery &amp; bicep adjustments</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-1">
+  <div class="module-number">02</div>
+  <div class="module-label">Module 2</div>
+  <div class="module-title">Pattern Manipulation — The Designer's Secret</div>
+  <ul class="module-topics">
+    <li>Dart magic — shoulder, side &amp; waist positions</li>
+    <li>Slash &amp; spread for gathers, pleats &amp; flares</li>
+    <li>Princess seams, yokes &amp; asymmetrical necklines</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-2">
+  <div class="module-number">03</div>
+  <div class="module-label">Module 3</div>
+  <div class="module-title">Trend-Focused Drafting — Viral Styles</div>
+  <ul class="module-topics">
+    <li>Structured corsets &amp; bustiers</li>
+    <li>360/720 peplums, bishop &amp; puff sleeves</li>
+    <li>Wrap dresses &amp; A-line silhouettes</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-1">
+  <div class="module-number">04</div>
+  <div class="module-label">Module 4</div>
+  <div class="module-title">Advanced Concepts &amp; Workflow</div>
+  <ul class="module-topics">
+    <li>Copying ready-to-wear into patterns</li>
+    <li>French curves, notches &amp; tracing wheels</li>
+    <li>Fit correction before cutting fabric</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-2">
+  <div class="module-number">05</div>
+  <div class="module-label">Module 5</div>
+  <div class="module-title">Basic Blocks &amp; Slopers</div>
+  <ul class="module-topics">
+    <li>Step-by-step bodice block drafting</li>
+    <li>Foundational skirt patterns for all body types</li>
+    <li>Basic sleeve pattern drafting</li>
+    <li>Accurate body measurement techniques</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-3">
+  <div class="module-number">06</div>
+  <div class="module-label">Module 6</div>
+  <div class="module-title">Pattern Manipulation Techniques</div>
+  <ul class="module-topics">
+    <li>Advanced dart manipulation methods</li>
+    <li>Adding fullness — slash &amp; spread techniques</li>
+    <li>Style line development from basic blocks</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-1">
+  <div class="module-number">07</div>
+  <div class="module-label">Module 7</div>
+  <div class="module-title">Specific Garment Drafting</div>
+  <ul class="module-topics">
+    <li>Jean-cupped corsets &amp; strapless tops</li>
+    <li>360, 720 &amp; 1080 peplum construction</li>
+    <li>Patterned wrapped A-line dresses</li>
+    <li>Complex custom designs from client sketches</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-2">
+  <div class="module-number">08</div>
+  <div class="module-label">Module 8</div>
+  <div class="module-title">Beginner Essentials</div>
+  <ul class="module-topics">
+    <li>Introductory pattern making guides</li>
+    <li>Tools — rulers, pattern paper &amp; French curves</li>
+    <li>Fixing common drafting mistakes</li>
+  </ul>
+</div>
+
+<div class="module-card reveal reveal-delay-3">
+  <div class="module-number">09</div>
+  <div class="module-label">Module 9</div>
+  <div class="module-title">Advanced &amp; Creative Techniques</div>
+  <ul class="module-topics">
+    <li>3D pattern cutting &amp; TR cutting</li>
+    <li>Draping vs. flat pattern making</li>
+    <li>Deconstructing garments into base patterns</li>
+  </ul>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ═══════════════ WHY ═══════════════ -->
+
+<section class="why section-padding" id="why">
+  <div class="section-header">
+    <p class="section-eyebrow reveal">The Difference</p>
+    <h2 class="section-title reveal reveal-delay-1">Why Train With <em>Crego?</em></h2>
+    <div class="section-line reveal reveal-delay-2"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">◆</span>
+      <h4>Personalized Pace</h4>
+      <p>No two students are the same. We focus intensively on the areas you find most challenging, building true understanding — not surface-level familiarity.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <span class="why-icon">✦</span>
+      <h4>Pro Techniques</h4>
+      <p>Go beyond what free tutorials teach. Learn the depths, the nuances, and the industry secrets that separate amateurs from professionals.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <span class="why-icon">◇</span>
+      <h4>Build a Portfolio</h4>
+      <p>Leave with a complete set of custom-fit master blocks — your personal pattern library that you'll use and build upon throughout your entire career.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+
+<section class="cta-section" id="enroll">
+  <div class="cta-inner">
+    <p class="section-eyebrow reveal">Begin Now</p>
+    <h2 class="section-title reveal reveal-delay-1">Your Mastery<br><em>Starts Today</em></h2>
+    <div class="section-line reveal reveal-delay-2"></div>
+    <p class="cta-desc reveal reveal-delay-3">
+      Ready to create clothes that fit perfectly — every single time? Send a message and let's discuss your goals, schedule, and how we'll get you there.
+    </p>
+    <a href="https://wa.me/2349090059964?text=Hello%20Crego%20Fashion%20House!%20I'm%20ready%20to%20enroll%20in%20the%20Pattern%20Drafting%20Training.%20I%20would%20like%20to%20learn%20about%20pricing%2C%20schedule%20and%20available%20modules.%20Thank%20you!" target="_blank" class="cta-whatsapp reveal reveal-delay-4">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enroll via WhatsApp
+    </a>
+    <div class="cta-social reveal reveal-delay-5">
+      <a href="https://www.instagram.com/cregofashion?igsh=MTdhNTI2cWt1dndwbA==" target="_blank">Follow on Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+
+<footer>
+  <div class="footer-logo">Crego Fashion House</div>
+  <p class="footer-text">Bridal &amp; High-Profile Fashion — Pattern Drafting Training</p>
+</footer>
+
+<script>
+// ─── PRELOADER ───
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('preloader').classList.add('hidden');
+  },1800);
+});
+
+// ─── CUSTOM CURSOR ───
+const dot=document.getElementById('cursorDot');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+  dot.style.transform='translate(-50%,-50%)';
+});
+function animateRing(){
+  rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+document.querySelectorAll('a, button, .module-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+});
+
+// ─── NAV SCROLL ───
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>80);
+});
+
+// ─── MOBILE MENU ───
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── SCROLL REVEAL ───
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
