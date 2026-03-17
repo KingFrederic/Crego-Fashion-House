@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* ============================================
+   CREGO FASHION HOUSE — Global Styles
+   ============================================ */
+
+@theme {
+  /* Quiet Luxury Palette */
+  --color-onyx: #0a0806;
+  --color-deep-brown: #1a1410;
+  --color-ink: #131110;
+  --color-alabaster: #faf6f0;
+  --color-cream: #f5efe7;
+  --color-silk: #f2ece4;
+  --color-champagne: #c9a96e;
+  --color-champagne-light: #e8d5a8;
+  --color-champagne-dark: #a8854a;
+  --color-rose: #c4828a;
+  --color-rose-muted: #a0626a;
+  --color-warm-gray: #8a8078;
+  --color-warm-gray-light: #b5ada5;
+
+  /* Typography */
+  --font-serif: "Playfair Display", "Georgia", serif;
+  --font-heading: "Cormorant Garamond", "Georgia", serif;
+  --font-sans: "Montserrat", "Helvetica Neue", sans-serif;
+
+  /* Spacing scale */
+  --spacing-section: clamp(5rem, 12vw, 10rem);
+}
+
+/* Base resets */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-onyx);
+  color: var(--color-alabaster);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-champagne);
+  color: var(--color-onyx);
+}
+
+/* ============================================
+   Film Grain Overlay
+   ============================================ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ============================================
+   Fluid Typography
+   ============================================ */
+.fluid-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 8vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+.fluid-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 300;
+}
+
+.fluid-subheadline {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* ============================================
+   Editorial Divider
+   ============================================ */
+.editorial-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-champagne), transparent);
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-onyx);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-champagne-dark);
+  border-radius: 3px;
+}
+
+/* ============================================
+   Glassmorphism utility
+   ============================================ */
+.glass {
+  background: rgba(10, 8, 6, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 169, 110, 0.1);
+}
+
+.glass-light {
+  background: rgba(250, 246, 240, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 246, 240, 0.08);
+}
+
+/* ============================================
+   Magnetic Button
+   ============================================ */
+.magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-champagne) 0%, var(--color-champagne-light) 50%, var(--color-champagne) 100%);
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+
+.magnetic-btn:hover::before {
+  transform: translateY(0);
+}
+
+.magnetic-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Horizontal scroll section
+   ============================================ */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================
+   Image reveal clip animation
+   ============================================ */
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+.clip-reveal {
+  animation: clipReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* ============================================
+   Stagger children animation helper
+   ============================================ */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ============================================
+   Gold gradient text
+   ============================================ */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--color-champagne) 0%, var(--color-champagne-light) 40%, var(--color-champagne) 60%, var(--color-champagne-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Parallax image container
+   ============================================ */
+.parallax-img-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-img-wrapper img {
+  transform: scale(1.15);
+  transition: transform 0.1s linear;
+}
